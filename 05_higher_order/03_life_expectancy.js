@@ -7,6 +7,9 @@
 // of death, dividing it by 100, and rounding it up, as in
 // Math.ceil(person.died / 100).
 
+var ancestry = require('./ancestry');
+ancestry = JSON.parse(ancestry);
+
 function average(array) {
   function plus(a, b) { return a + b; }
   return array.reduce(plus) / array.length;
