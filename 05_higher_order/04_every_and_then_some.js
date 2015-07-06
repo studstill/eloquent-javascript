@@ -24,6 +24,17 @@ function every(array, testArg) {
   return true;
 }
 
+
+function some(array, testArg) {
+  for (var i = 0; i < array.length; i++) {
+    if (typeof(testArg) === 'function' && testArg(array[i]))
+      return true;
+    if (typeof(testArg) != 'function' && array[i] === testArg)
+      return true;
+  }
+  return false;
+}
+
 console.log(every([NaN, NaN, NaN], isNaN));
 // → true
 console.log(every([NaN, NaN, 4], isNaN));
