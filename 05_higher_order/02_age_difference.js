@@ -7,6 +7,8 @@
 // present in the array. The byName object, which makes it easy to find
 // a person’s object from their name, might be useful here.
 
+var ancestry = require('./ancestry');
+
 function average(array) {
   function plus(a, b) { return a + b; }
   return array.reduce(plus) / array.length;
@@ -17,6 +19,18 @@ ancestry.forEach(function(person) {
   byName[person.name] = person;
 });
 
-// Your code here.
+function hasKnownMother(person) {
+  if (byName[person.mother] && byName[person.mother].born && person.born)
+    return person;
+}
 
+var withMothers = ancestry.filter(hasKnownMother);
+
+var ageDiffArray = withMothers.map(function(person) {
+  return person.born - byName[person.mother].born;
+});
+
+var averageOfAges = average(ageDiffArray);
+
+console.log(averageOfAges);
 // → 31.2
