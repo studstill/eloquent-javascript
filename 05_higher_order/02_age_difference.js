@@ -8,6 +8,7 @@
 // a person’s object from their name, might be useful here.
 
 var ancestry = require('./ancestry');
+ancestry = JSON.parse(ancestry);
 
 function average(array) {
   function plus(a, b) { return a + b; }
