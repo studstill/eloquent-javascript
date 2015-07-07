@@ -13,6 +13,8 @@ exports = module.exports = {};
 
 ancestry = JSON.parse(ancestry);
 
+module.exports = avergageAgeByCentury;
+
 function avergageAgeByCentury(ancestryData) {
   // include average helper function
     function average(array) {
@@ -29,7 +31,9 @@ function avergageAgeByCentury(ancestryData) {
   });
   // reduce the century element's array to an average age
   for (var century in ageByCentury) {
-    ageByCentury[century] = average(ageByCentury[century]).toFixed(1);
+    ageByCentury[century] = Number(average(ageByCentury[century]));
+    if (ageByCentury[century] % 1 !== 0)
+      ageByCentury[century] = parseFloat(ageByCentury[century].toFixed(1));
   }
   return ageByCentury;
 }
