@@ -8,15 +8,33 @@
 // Math.ceil(person.died / 100).
 
 var ancestry = require('./ancestry');
+
+exports = module.exports = {};
+
 ancestry = JSON.parse(ancestry);
 
-function average(array) {
-  function plus(a, b) { return a + b; }
-  return array.reduce(plus) / array.length;
+function avergageAgeByCentury(ancestryData) {
+  // include average helper function
+    function average(array) {
+    function plus(a, b) { return a + b; }
+    return array.reduce(plus) / array.length;
+  }
+  // create object where each key is a century number
+  var ageByCentury = {};
+  ancestryData.forEach(function(person) {
+    var century = Math.ceil(person.died / 100);
+    if (!ageByCentury[century])
+      ageByCentury[century] = [];
+    ageByCentury[century].push(person.died - person.born);
+  });
+  // reduce the century element's array to an average age
+  for (var century in ageByCentury) {
+    ageByCentury[century] = average(ageByCentury[century]).toFixed(1);
+  }
+  return ageByCentury;
 }
 
-// Your code here.
-
+console.log(avergageAgeByCentury(ancestry));
 // → 16: 43.5
 //   17: 51.2
 //   18: 52.8
