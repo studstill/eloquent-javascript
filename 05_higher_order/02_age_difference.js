@@ -10,28 +10,27 @@
 var ancestry = require('./ancestry');
 ancestry = JSON.parse(ancestry);
 
-function average(array) {
-  function plus(a, b) { return a + b; }
-  return array.reduce(plus) / array.length;
-}
-
 var byName = {};
 ancestry.forEach(function(person) {
   byName[person.name] = person;
 });
+
+function average(array) {
+  function plus(a, b) { return a + b; }
+  return array.reduce(plus) / array.length;
+}
 
 function hasKnownMother(person) {
   if (byName[person.mother] && byName[person.mother].born && person.born)
     return person;
 }
 
-var withMothers = ancestry.filter(hasKnownMother);
+function motherAge(child) {
+  return child.born - byName[child.mother].born;
+}
 
-var ageDiffArray = withMothers.map(function(person) {
-  return person.born - byName[person.mother].born;
-});
-
-var averageOfAges = average(ageDiffArray);
+var averageOfAges = average(ancestry.filter(hasKnownMother)
+                                    .map(motherAge));
 
 console.log(averageOfAges);
 // → 31.2
